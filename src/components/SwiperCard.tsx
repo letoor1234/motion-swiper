@@ -2,6 +2,7 @@
 import { ToneData } from "@/constants/tones";
 import useSwiperAnimations from "@/hooks/useSwiperAnimations";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRef } from "react";
 import { BiDislike } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa";
 import { Button } from "./ui/button";
@@ -31,6 +32,18 @@ const SwiperCard = ({ index, onSwiped, tone }: SwiperCardProps) => {
     handleSuperLike,
   } = useSwiperAnimations({ index, tags, onSwiped });
 
+  // Manually handle double tap
+  const lastTap = useRef<number>(0);
+
+  const handleTap = () => {
+    const now = Date.now();
+    if (now - lastTap.current < 300) {
+      // Double tap detected
+      handleSuperLike();
+    }
+    lastTap.current = now;
+  };
+
   return (
     <>
       {/**Card */}
@@ -52,6 +65,7 @@ const SwiperCard = ({ index, onSwiped, tone }: SwiperCardProps) => {
         initial={{ scale: 1, opacity: 1 }}
         onDragEnd={handleDragEnd}
         onDoubleClick={handleSuperLike}
+        onPointerDown={handleTap}
       >
         {/**Card data */}
         <div

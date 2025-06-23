@@ -132,6 +132,7 @@ const useSwiperAnimations = ({
 
   const handleSuperLike = async () => {
     if (alreadyClicked) return;
+
     setAlreadyClicked(true);
     // Add superlike points
     addTags(tags, superLikePoints);
@@ -170,6 +171,7 @@ const useSwiperAnimations = ({
       transition: { duration: 0.6, delay: 0.5 },
     });
 
+    setAlreadyClicked(false);
     // Clear emojis
     setTimeout(() => {
       setSuperLikeEmojis([]);
@@ -177,8 +179,6 @@ const useSwiperAnimations = ({
 
     // Handle next card
     onSwiped();
-
-    setAlreadyClicked(false);
   };
 
   // Button animations
