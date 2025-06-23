@@ -104,10 +104,10 @@ const useSwiperAnimations = ({
     onSwiped();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDragEnd = async (
     event: MouseEvent | TouchEvent | PointerEvent,
-    info: PanInfo,
-    index: number
+    info: PanInfo
   ) => {
     // Limit overtaken to right is Like
     if (info.offset.x > threshold) {

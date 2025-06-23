@@ -50,7 +50,7 @@ const SwiperCard = ({ index, onSwiped, tone }: SwiperCardProps) => {
       <motion.div
         ref={cardRef}
         className={`relative w-full max-w-md h-full pt-12 px-4 pb-4 rounded-xl overflow-hidden shadow-lg cursor-grab active:cursor-grabbing ${cardClassNames}`}
-        drag="x"
+        drag={"x"}
         dragControls={dragControls}
         animate={animationControls}
         whileDrag={{
