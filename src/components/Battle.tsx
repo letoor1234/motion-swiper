@@ -63,7 +63,7 @@ const Battle = () => {
     let left = 0;
     let right = topTones.length - 1;
 
-    const sorted = [...topTones]; // asegúrate de que topTones esté ordenado de mayor a menor ya
+    const sorted = [...topTones].slice(0, 6); // asegúrate de que topTones esté ordenado de mayor a menor ya
 
     while (left < right) {
       pairs.push(sorted[left]);

@@ -2,6 +2,7 @@
 import { dislikePoints, likePoints, superLikePoints } from "@/constants/points";
 import { useSwipeStore } from "@/hooks/useSwipeStore";
 import {
+  PanInfo,
   useAnimation,
   useDragControls,
   useMotionValue,
@@ -103,7 +104,11 @@ const useSwiperAnimations = ({
     onSwiped();
   };
 
-  const handleDragEnd = async (event: any, info: any) => {
+  const handleDragEnd = async (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo,
+    index: number
+  ) => {
     // Limit overtaken to right is Like
     if (info.offset.x > threshold) {
       buttonsExit();

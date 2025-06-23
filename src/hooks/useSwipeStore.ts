@@ -1,4 +1,4 @@
-import tones, { ToneData } from "@/constants/tones";
+import { ToneData } from "@/constants/tones";
 import { create } from "zustand";
 
 interface SwipeStore {
@@ -71,7 +71,7 @@ export const useSwipeStore = create<SwipeStore>((set) => ({
     }),
 
   setWinner: ({ winner, secondaryTags, confidenceScore }) =>
-    set((s) => {
+    set(() => {
       return {
         winner,
         secondaryTags,
@@ -80,7 +80,7 @@ export const useSwipeStore = create<SwipeStore>((set) => ({
     }),
 
   reset: () =>
-    set((s) => {
+    set(() => {
       return {
         currentIndex: 0,
         tagScores: {},

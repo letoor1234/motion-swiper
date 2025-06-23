@@ -1,4 +1,4 @@
-import { useAnimation, useDragControls } from "framer-motion";
+import { PanInfo, useAnimation, useDragControls } from "framer-motion";
 import { useEffect, useState } from "react";
 import useIsMobile from "./useIsMobile";
 
@@ -155,7 +155,11 @@ const useResultAnimations = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const threshold = 100;
-  const handleDragEnd = async (event: any, info: any, index: number) => {
+  const handleDragEnd = async (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo,
+    index: number
+  ) => {
     const control =
       index === 0
         ? firstAnimControls
