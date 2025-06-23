@@ -7,7 +7,7 @@ interface SwipeStore {
 }
 
 export const usePageStore = create<SwipeStore>((set) => ({
-  currentPage: "result", // "swiper",
+  currentPage: "swiper",
   changePage: (page) =>
     set((s) => {
       return {

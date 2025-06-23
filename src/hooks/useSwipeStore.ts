@@ -30,9 +30,9 @@ export const useSwipeStore = create<SwipeStore>((set) => ({
   currentIndex: 0,
   tagScores: {},
   lastTagScored: null,
-  winner: tones[0], // null,
-  secondaryTags: tones[0].tags, //[],
-  confidenceScore: 85, // 0,
+  winner: null,
+  secondaryTags: [],
+  confidenceScore: 0,
   nextCard: () =>
     set((s) => ({
       currentIndex: s.currentIndex + 1,
