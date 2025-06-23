@@ -1,17 +1,12 @@
 import tones, { ToneData } from "@/constants/tones";
 import { usePageStore } from "@/hooks/usePageStore";
+import useResultAnimations from "@/hooks/useResultAnimations";
 import { useSwipeStore } from "@/hooks/useSwipeStore";
-import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  motion,
-  useAnimation,
-  useDragControls,
-  useMotionValue,
-} from "framer-motion";
+import { motion } from "framer-motion";
+import { useEffect, useMemo } from "react";
+import { BiEdit, BiLike } from "react-icons/bi";
 import { FaCrown } from "react-icons/fa";
 import { Button } from "./ui/button";
-import { BiEdit, BiLike } from "react-icons/bi";
-import useResultAnimations from "@/hooks/useResultAnimations";
 
 const Result = () => {
   const { winner, secondaryTags, reset } = useSwipeStore();
@@ -22,6 +17,7 @@ const Result = () => {
     titleControls,
     firstAnimControls,
     firstDragControls,
+    crownControls,
     secondAnimControls,
     secondDragControls,
     thirdAnimControls,
@@ -102,13 +98,18 @@ const Result = () => {
             onDragEnd={(event, info) => handleDragEnd(event, info, i)}
             className={`absolute ${
               currentIndex === i ? "z-40" : secondIndex === i ? "z-30" : "z-20"
-            } w-full max-w-md h-[40vh] pb-12 px-4 pt-4 rounded-xl shadow-lg cursor-pointer ${
+            } w-full max-w-md h-[40vh] md:h-[60vh] pb-12 px-4 pt-4 rounded-xl shadow-lg cursor-pointer ${
               tone.cardClassNames
             }`}
             initial={{ y: 200, scale: 1, opacity: 0 }}
           >
             {tone.label === winner.label ? (
-              <FaCrown className="absolute top-[-4.5em] w-24 h-24 left-[50%] translate-x-[-50%] text-yellow-500" />
+              <motion.div
+                animate={crownControls}
+                className="absolute top-[-4.5em] left-[50%] translate-x-[-50%]"
+              >
+                <FaCrown className="w-24 h-24 text-yellow-500" />
+              </motion.div>
             ) : null}
             {/**Card data */}
             <div className="rounded-xl overflow-hidden w-full h-full">
@@ -116,7 +117,7 @@ const Result = () => {
                 <img
                   src={tone.image}
                   alt={tone.label}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover pointer-events-none"
                 />
               </div>
             </div>

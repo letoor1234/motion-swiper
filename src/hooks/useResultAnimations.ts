@@ -1,22 +1,17 @@
-import tones, { ToneData } from "@/constants/tones";
-import { usePageStore } from "@/hooks/usePageStore";
-import { useSwipeStore } from "@/hooks/useSwipeStore";
-import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  motion,
-  useAnimation,
-  useDragControls,
-  useMotionValue,
-} from "framer-motion";
-import { FaCrown } from "react-icons/fa";
-import { BiEdit, BiLike } from "react-icons/bi";
+import { useAnimation, useDragControls } from "framer-motion";
+import { useEffect, useState } from "react";
+import useIsMobile from "./useIsMobile";
 
 const useResultAnimations = () => {
+  const isMobile = useIsMobile();
+
   const titleControls = useAnimation();
 
   // Card animations
   const firstAnimControls = useAnimation();
   const firstDragControls = useDragControls();
+
+  const crownControls = useAnimation();
 
   const secondAnimControls = useAnimation();
   const secondDragControls = useDragControls();
@@ -93,12 +88,29 @@ const useResultAnimations = () => {
     firstAnimControls.start({
       scale: 1.1,
       opacity: 1,
-      y: 200,
+      y: isMobile ? 200 : 150,
       transition: {
         type: "spring",
         stiffness: 200,
         damping: 20,
         duration: 1,
+      },
+    });
+
+    crownControls.set({
+      y: 50,
+      opacity: 0,
+      scale: 0.3,
+    });
+    crownControls.start({
+      scale: 1,
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 200,
+        damping: 20,
+        duration: 0.5,
       },
     });
 
@@ -112,7 +124,7 @@ const useResultAnimations = () => {
     secondAnimControls.start({
       opacity: 1,
       scale: 1.05,
-      y: 275,
+      y: isMobile ? 275 : 225,
       transition: {
         type: "spring",
         stiffness: 200,
@@ -130,7 +142,7 @@ const useResultAnimations = () => {
     // Appears from top
     thirdAnimControls.start({
       opacity: 1,
-      y: 350,
+      y: isMobile ? 350 : 300,
       transition: {
         type: "spring",
         stiffness: 200,
@@ -162,18 +174,19 @@ const useResultAnimations = () => {
         : index === 1
         ? firstAnimControls
         : secondAnimControls;
+
     // Limit overtaken to right is Like
     if (info.offset.x > threshold || info.offset.x < -threshold) {
       control.start({
         scale: 1,
         opacity: [1, 0, 1],
-        x: [600, 600, 0],
-        y: [-150, 350, 350],
-        transition: { duration: 0.4 },
+        x: [isMobile ? 600 : 1000, isMobile ? 600 : 1000, 0],
+        y: [-150, 500, 500],
+        transition: { duration: isMobile ? 0.4 : 0.6 },
       });
       secondControl.start({
         scale: 1.1,
-        y: 200,
+        y: isMobile ? 200 : 150,
         transition: {
           type: "spring",
           stiffness: 200,
@@ -183,7 +196,7 @@ const useResultAnimations = () => {
       });
       thirdControl.start({
         scale: 1.05,
-        y: 275,
+        y: isMobile ? 275 : 225,
         transition: {
           type: "spring",
           stiffness: 200,
@@ -212,6 +225,7 @@ const useResultAnimations = () => {
     // Cards
     firstAnimControls,
     firstDragControls,
+    crownControls,
     secondAnimControls,
     secondDragControls,
     thirdAnimControls,

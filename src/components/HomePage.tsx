@@ -16,9 +16,9 @@ const HomePage = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5 }}
-          className="page"
+          className="page max-w-xl mx-auto"
         >
-          <div className="w-full h-screen flex flex-col gap-2 p-6 overflow-hidden">
+          <div className="w-full h-screen flex flex-col gap-2 p-6">
             <Swiper />
           </div>
         </motion.main>
@@ -30,9 +30,9 @@ const HomePage = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5 }}
-          className="page"
+          className="page max-w-3xl mx-auto"
         >
-          <div className="w-full h-screen flex flex-col gap-2 p-6 overflow-hidden">
+          <div className="w-full h-screen flex flex-col gap-2 p-6">
             <Battle />
           </div>
         </motion.main>
@@ -44,9 +44,9 @@ const HomePage = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5 }}
-          className="page"
+          className="page max-w-xl mx-auto"
         >
-          <div className="w-full h-screen flex flex-col gap-2 p-6 overflow-hidden">
+          <div className="w-full h-screen flex flex-col gap-2 p-6">
             <Result />
           </div>
         </motion.main>

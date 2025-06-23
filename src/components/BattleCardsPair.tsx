@@ -1,5 +1,6 @@
 "use client";
 import { ToneData } from "@/constants/tones";
+import useIsMobile from "@/hooks/useIsMobile";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -12,6 +13,8 @@ const BattleCardsPair = ({
   tonesPair,
   handleBattlePick,
 }: BattleCardsPairProps) => {
+  const isMobile = useIsMobile();
+
   const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
 
   const firstToneController = useAnimation();
@@ -58,7 +61,8 @@ const BattleCardsPair = ({
     await selectedController.start({
       // Scale up
       scale: 1.1,
-      y: index === 0 ? 100 : -100,
+      y: isMobile ? (index === 0 ? 100 : -100) : 0,
+      x: isMobile ? 0 : index === 0 ? 100 : -100,
       transition: { duration: 0.2 },
     });
     await selectedController.start({
@@ -102,14 +106,13 @@ const BattleCardsPair = ({
 
   return (
     <AnimatePresence mode="wait">
-      <motion.div className="relative flex flex-col w-full gap-2">
+      <motion.div className="relative flex flex-col md:flex-row w-full gap-2">
         {tonesPair.map((tone, index) => {
           return (
             <motion.div
               key={`battle-card-${tone.label}`}
-              className={`relative w-full max-w-md h-[40vh] pb-12 px-4 pt-4 rounded-xl overflow-hidden shadow-lg cursor-pointer ${tone.cardClassNames}`}
+              className={`relative w-full max-w-md md:w-xl h-[40vh] md:h-[70vh] pb-12 px-4 pt-4 rounded-xl overflow-hidden shadow-lg cursor-pointer ${tone.cardClassNames}`}
               onClick={() => {
-                console.log("Clicked");
                 setSelectedLabel(tone.label);
                 handleSelectTone(tone);
               }}
@@ -123,7 +126,7 @@ const BattleCardsPair = ({
                   <img
                     src={tone.image}
                     alt={tone.label}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover pointer-events-none"
                   />
                 </div>
               </div>
@@ -137,7 +140,7 @@ const BattleCardsPair = ({
         })}
         <motion.div
           animate={vsLabelControls}
-          className="absolute top-50 left-60 translate-y-[50%] uppercase text-2xl font-bold p-4 bg-black text-white rounded-full w-16 h-16 flex items-center justify-center border border-slate-50"
+          className="absolute top-[50%] translate-y-[-50%] md:translate-y-0 left-60 md:left-[50%] translate-x-[-50%] uppercase text-2xl font-bold p-4 bg-black text-white rounded-full w-16 h-16 flex items-center justify-center border border-slate-50"
         >
           vs
         </motion.div>

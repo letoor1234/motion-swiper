@@ -8,6 +8,7 @@ import {
   useTransform,
 } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import useIsMobile from "./useIsMobile";
 
 interface SuperLikeEmojis {
   id: number;
@@ -26,13 +27,23 @@ const useSwiperAnimations = ({
   tags,
   onSwiped,
 }: UseSwiperAnimationsProps) => {
+  const isMobile = useIsMobile();
+
   // Controlers and initial values
   const dragControls = useDragControls();
   const animationControls = useAnimation();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const rotate = useTransform(x, [-400, 0, 400], [35, 0, -35]);
-  const translateY = useTransform(x, [-400, 0, 400], [-150, 0, -150]);
+  const rotate = useTransform(
+    x,
+    [isMobile ? -400 : -600, 0, isMobile ? 400 : 600],
+    [35, 0, -35]
+  );
+  const translateY = useTransform(
+    x,
+    [isMobile ? -400 : -600, 0, isMobile ? 400 : 600],
+    [-150, 0, -150]
+  );
   const backgroundColor = useTransform(
     x,
     [-250, 0, 250],
@@ -66,7 +77,7 @@ const useSwiperAnimations = ({
   }, [index]);
 
   // Limit overtaken
-  const threshold = 100;
+  const threshold = isMobile ? 100 : 200;
 
   const handleLike = async () => {
     addTags(tags, likePoints);

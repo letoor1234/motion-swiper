@@ -136,9 +136,9 @@ const Battle = () => {
       ) : null}
 
       {phase === "secondary-tags" && winnerState ? (
-        <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col md:flex-row items-center gap-6">
           <motion.div
-            className={`relative w-full max-w-md h-[40vh] pb-12 px-4 pt-4 rounded-xl overflow-hidden shadow-lg cursor-pointer ${winnerState.cardClassNames}`}
+            className={`relative w-full max-w-md md:w-2xl h-[40vh] md:h-[70vh] pb-12 px-4 pt-4 rounded-xl overflow-hidden shadow-lg cursor-pointer ${winnerState.cardClassNames}`}
             initial={{ scale: 0.8, opacity: 0, y: -200 }}
             animate={{
               scale: 1,
@@ -159,7 +159,7 @@ const Battle = () => {
                 <img
                   src={winnerState.image}
                   alt={winnerState.label}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover pointer-events-none"
                 />
               </div>
             </div>
@@ -169,36 +169,40 @@ const Battle = () => {
               {winnerState.label}
             </div>
           </motion.div>
-          <motion.p>Select 2 secondary tones:</motion.p>
-          <div className="flex gap-4 flex-wrap justify-center">
-            {topTones
-              .filter((t) => t.label !== winnerState.label)
-              .map((tone) => (
-                <button
-                  key={tone.label}
-                  onClick={() => toggleSecondary(tone)}
-                  className={`border px-4 py-2 rounded transition-transform ${
-                    tone.labelClassNames
-                  }
+          <div className="w-full flex flex-col items-center justify-center gap-2 md:justify-between md:h-full">
+            <div className="w-full flex flex-col items-center justify-center gap-2">
+              <motion.p>Select 2 secondary tones:</motion.p>
+              <div className="flex gap-4 flex-wrap justify-center">
+                {topTones
+                  .filter((t) => t.label !== winnerState.label)
+                  .map((tone) => (
+                    <button
+                      key={tone.label}
+                      onClick={() => toggleSecondary(tone)}
+                      className={`border px-4 py-2 rounded transition-transform cursor-pointer ${
+                        tone.labelClassNames
+                      }
                   ${tone.cardClassNames}
                   ${
                     secondaryChoices.includes(tone)
                       ? "border scale-110 shadow-lg"
-                      : "opacity-80"
+                      : "opacity-60"
                   }`}
-                >
-                  {tone.label}
-                </button>
-              ))}
+                    >
+                      {tone.label}
+                    </button>
+                  ))}
+              </div>
+            </div>
+            <Button
+              disabled={secondaryChoices.length !== 2}
+              onClick={handleFinish}
+              className="disabled:opacity-50 font-bold"
+              size={"lg"}
+            >
+              Finish
+            </Button>
           </div>
-          <Button
-            disabled={secondaryChoices.length !== 2}
-            onClick={handleFinish}
-            className="disabled:opacity-50 font-bold"
-            size={"lg"}
-          >
-            Finish
-          </Button>
         </div>
       ) : null}
     </section>
